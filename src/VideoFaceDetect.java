@@ -1,21 +1,9 @@
 import java.awt.EventQueue;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.objdetect.CascadeClassifier;
 
 public class VideoFaceDetect extends JFrame {
 	private JPanel contentPane;
@@ -46,20 +34,24 @@ public class VideoFaceDetect extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
 		
-
 		new MyThread().start();
 	}
 
 	VideoCap videoCap = new VideoCap();
 	FaceDetector face = new FaceDetector();
 
+	/**
+	 * Paint video frame in to content pane
+	 */
 	public void paint(Graphics g) {
 		g = contentPane.getGraphics();
 		g.drawImage(face.detectFace(videoCap.getOneFrame()), 0, 0, this);
 	}
 
+	/**
+	 * Thread to handle the video feed
+	 */
 	class MyThread extends Thread {
 		@Override
 		public void run() {
